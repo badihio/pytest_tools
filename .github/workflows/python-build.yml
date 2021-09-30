@@ -35,7 +35,7 @@ jobs:
     - uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
-        mention: 'here'
+        mention: ${{  steps.vars.outputs.slack-user-id }} 
         if_mention: 'always'
         text: ${{  steps.vars.outputs.slack-user-id }} 
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
