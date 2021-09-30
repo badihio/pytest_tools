@@ -10,7 +10,7 @@ name: Build Python Package
 
 on:
   push:
-    branches: [master]
+    branches: [ main ]
 
 jobs:
   build:
