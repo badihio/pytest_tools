@@ -6,7 +6,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='pytest_tools',
-    version='0.0.2',
+    version='0.0.3',
     author='Ohad Badihi',
     description='Some nice tooling for pytest',
     long_description=long_description,
@@ -19,6 +19,5 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     py_modules=['pytest_tools'],
-    package_dir={'': 'pytest_tools/src'},
     install_requires=[]
 )
