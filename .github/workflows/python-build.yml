@@ -30,7 +30,7 @@ jobs:
     - name: Prepare Vars
       id: vars
       run: |
-        export SLACK_USER_ID='@Ohad Badihi'
+        export SLACK_USER_ID='Ohad Badihi'
         echo "::set-output name=slack-user-id::${SLACK_USER_ID}"
     - uses: 8398a7/action-slack@v3
       with:
