@@ -30,7 +30,7 @@ jobs:
     - name: Prepare Vars
       run: |
         export SLACK_USER_ID=obadihi
-        echo "::set-env name=SLACK_USER_ID::$SLACK_USER_ID"
+        echo "::set-output name=slack-user-id::${SLACK_USER_ID}"
     - uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
