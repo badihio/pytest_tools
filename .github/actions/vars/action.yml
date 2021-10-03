@@ -44,22 +44,19 @@ runs:
           export GCP_PROJECT_ID=intsights
           export GKE_CLUSTER=prod-cluster-a1eea04
           export ENVIRONMENT=prod
-          #export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_PROD }}
-          export SLACK_WEBHOOK_URL='$SLACK_WEBHOOK_URL_PROD'
+          export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_PROD }}
         elif [[ "${{ github.event_name }}" == 'workflow_dispatch' && ${branch_name} == 'master' ]] ; then
           echo "Deployment: production"
           export GCP_PROJECT_ID=intsights
           export GKE_CLUSTER=prod-cluster-a1eea04
           export ENVIRONMENT=prod
-          #export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_PROD }}
-          export SLACK_WEBHOOK_URL='$SLACK_WEBHOOK_URL_PROD'
+          export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_PROD }}
         else
           echo "Deployment: development"
           export GCP_PROJECT_ID=intsights-dev-2
           export GKE_CLUSTER=dev-cluster-23b9a3c
-          export ENVIRONMENT=dev
-          #export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_DEV }}
-          export SLACK_WEBHOOK_URL='$SLACK_WEBHOOK_URL_DEV'
+          Export ENVIRONMENT=dev
+          export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_DEV }}
         fi
 
         echo "::set-output name=gcp-project-id::${GCP_PROJECT_ID}"
