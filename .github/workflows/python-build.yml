@@ -45,7 +45,7 @@ jobs:
         status: ${{ job.status }}
         mention: ${{  steps.slack-info.outputs.slack-user-id }} 
         if_mention: 'always'
-        test: ${{  steps.slack-info.outputs.slack-user-id }} 
+        text: ${{  steps.slack-info.outputs.slack-user-id }} 
         fields: repo,message,commit,author,action,eventname,ref,workflow,job,took
       env:
         slack_webhook_url: ${{ secrets.slack_webhook_url }}
