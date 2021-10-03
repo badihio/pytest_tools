@@ -8,6 +8,7 @@ runs:
   steps:
     - name: Get slack user information
       id: slack-info
+      shell: bash
       run: |
         slack_user_id=$(wget -q -O - --header="Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" "https://slack.com/api/users.lookupByEmail?email=${{ inputs.invoker_email }}" | jq .user.id)
         echo "::set-output name=slack-user-id::${slack_user_id}"
