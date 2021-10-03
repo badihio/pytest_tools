@@ -60,4 +60,4 @@ runs:
         echo "::set-output name=image-tag::us.gcr.io/$GCP_PROJECT_ID/${{ inputs.image-name }}:$(git rev-parse --short HEAD)"
         echo "::set-output name=gke-cluster::${GKE_CLUSTER}"
         echo "::set-output name=environment::${ENVIRONMENT}"
-        echo "::set-output name=slack_webhook_url::${SLACK_WEBHOOK_URL}"
+        echo "::set-output name=slack-webhook-url::${SLACK_WEBHOOK_URL}"

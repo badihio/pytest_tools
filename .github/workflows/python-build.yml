@@ -57,5 +57,5 @@ jobs:
         text: ${{  steps.slack-info.outputs.slack-user-id }} 
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
       env:
-        SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack_webhook_url }}
+        SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
       if: always()
