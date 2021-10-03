@@ -1,4 +1,6 @@
 inputs:
+  pusher_email:
+    description: 'the message content to publish'
   message:
     description: 'the message content to publish'
 runs:

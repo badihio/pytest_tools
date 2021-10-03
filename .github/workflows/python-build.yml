@@ -9,6 +9,12 @@
 name: Build Python Package
 
 on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Should deploy (n/y)'
+        default: 'n'
+        required: false
   push:
     branches: [ main ]
 
