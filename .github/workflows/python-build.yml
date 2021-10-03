@@ -54,7 +54,7 @@ jobs:
         status: ${{ job.status }}
         mention: ${{  steps.slack-info.outputs.slack-user-id }} 
         if_mention: 'always'
-        text: ${{  steps.slack-info.outputs.slack-user-id }} 
+        text: '{{{APP_NAME}}} finished'
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
       env:
         SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
