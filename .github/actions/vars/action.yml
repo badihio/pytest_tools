@@ -55,7 +55,7 @@ runs:
           echo "Deployment: development"
           export GCP_PROJECT_ID=intsights-dev-2
           export GKE_CLUSTER=dev-cluster-23b9a3c
-          Export ENVIRONMENT=dev
+          export ENVIRONMENT=dev
           export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_DEV }}
         fi
 
