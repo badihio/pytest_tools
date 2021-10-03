@@ -33,20 +33,8 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install build
-    - name: Get slack user information
-      id: slack-info
-      run: |
-        #slack_user_id=$(wget -q -O - --header="Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" "https://slack.com/api/users.lookupByEmail?email=${{  github.event.head_commit.author.email }}" | jq .user.id)
-        slack_user_id=$(wget -q -O - --header="Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" "https://slack.com/api/users.lookupByEmail?email=${{  secrets.USER_EMAIL }}" | jq .user.id)
-        echo "::set-output name=slack-user-id::${slack_user_id}"
-    - name: Slack Notification
-    - uses: 8398a7/action-slack@v3
+    - name: Prepare Variables
+      uses: ./.github/actions/slack-notify
       with:
-        status: ${{ job.status }}
-        mention: ${{  steps.slack-info.outputs.slack-user-id }} 
-        if_mention: 'always'
-        test: ${{  steps.slack-info.outputs.slack-user-id }} 
-        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      if: always()
+        invoker-email: ohad.badihi@intsights.com
+        message: 'this is a test message'
