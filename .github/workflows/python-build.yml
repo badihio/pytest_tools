@@ -29,6 +29,15 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
+    - name: Prepare Variables
+      uses: ./.github/actions/vars
+      id: vars
+      with:
+        image-name: tip-graph-api
+      env:
+        SLACK_WEBHOOK_URL_PROD: ${{ secrets.SLACK_WEBHOOK_URL_PROD }}
+        SLACK_WEBHOOK_URL_DEV: ${{ secrets.SLACK_WEBHOOK_URL_DEV }}
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -48,5 +57,5 @@ jobs:
         text: ${{  steps.slack-info.outputs.slack-user-id }} 
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack_webhook_url }}
       if: always()

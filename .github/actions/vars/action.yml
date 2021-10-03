@@ -1,0 +1,63 @@
+inputs:
+  image-name:
+    description: 'unique_image_name'
+outputs:
+  gcp-project-id:
+    description: 'GCP Project ID'
+    value: ${{ steps.vars.outputs.gcp-project-id }}
+  image-tag:
+    description: 'Docker image name'
+    value: ${{ steps.vars.outputs.image-tag }}
+  gke-cluster:
+    description: 'GKE Cluster name'
+    value: ${{ steps.vars.outputs.gke-cluster }}
+  environment:
+    description: 'Environment (can be dev or prod)'
+    value: ${{ steps.vars.outputs.environment }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Prepare Variables
+      id: vars
+      shell: bash
+      run: |
+        set -v
+
+        if [ ! -z "${GITHUB_BASE_REF}" ] ; then
+          # pull_request event
+          branch_name="${GITHUB_HEAD_REF}"
+          git fetch --depth=1 origin ${GITHUB_BASE_REF}
+          github_short_sha=$(echo ${{ github.event.pull_request.head.sha }} | head -c7)
+        else
+          # push event
+          branch_name="${GITHUB_REF##*/}"
+          github_short_sha=$(echo ${GITHUB_SHA} | head -c7)
+        fi
+
+        echo "Branch: ${branch_name}"
+
+        if [[ "${{ github.event_name }}" == 'push' && ${branch_name} == 'master' ]] ; then
+          echo "Deployment: production"
+          export GCP_PROJECT_ID=intsights
+          export GKE_CLUSTER=prod-cluster-a1eea04
+          export ENVIRONMENT=prod
+          export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_PROD }}
+        elif [[ "${{ github.event_name }}" == 'workflow_dispatch' && ${branch_name} == 'master' ]] ; then
+          echo "Deployment: production"
+          export GCP_PROJECT_ID=intsights
+          export GKE_CLUSTER=prod-cluster-a1eea04
+          export ENVIRONMENT=prod
+          export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_PROD }}
+        else
+          echo "Deployment: development"
+          export GCP_PROJECT_ID=intsights-dev-2
+          export GKE_CLUSTER=dev-cluster-23b9a3c
+          export ENVIRONMENT=dev
+          export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_DEV }}
+        fi
+
+        echo "::set-output name=gcp-project-id::${GCP_PROJECT_ID}"
+        echo "::set-output name=image-tag::us.gcr.io/$GCP_PROJECT_ID/${{ inputs.image-name }}:$(git rev-parse --short HEAD)"
+        echo "::set-output name=gke-cluster::${GKE_CLUSTER}"
+        echo "::set-output name=environment::${ENVIRONMENT}"
+        echo "::set-output name=slack_webhook_url::${SLACK_WEBHOOK_URL}"
