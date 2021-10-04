@@ -26,6 +26,9 @@ outputs:
   slack-user:
     description: 'Slack user id'
     value: ${{ steps.vars.outputs.slack-user }}
+  should-deploy:
+    description: 'Should we deploy the code (boolean)')'
+    value: ${{ steps.vars.outputs.should-deploy }}
 runs:
   using: 'composite'
   steps:
@@ -34,6 +37,8 @@ runs:
       shell: bash
       run: |
         set -v
+
+        should_deploy=$(${{ github.event_name == 'push' || github.event.inputs.deploy == 'y' }})
 
         # slack user info
         slack_user_id=$(wget -q -O - --header="Authorization: Bearer ${{ inputs.slack-bot-token }}" \
@@ -78,3 +83,4 @@ runs:
         echo "::set-output name=environment::${ENVIRONMENT}"
         echo "::set-output name=slack-webhook-url::${SLACK_WEBHOOK_URL}"
         echo "::set-output name=slack-user::${slack_user_id}"
+        echo "::set-output name=should-deploy::${should_deploy}"
