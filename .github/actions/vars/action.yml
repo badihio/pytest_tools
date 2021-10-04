@@ -17,6 +17,9 @@ outputs:
   slack-webhook-url:
     description: 'Slack webhook URL'
     value: ${{ steps.vars.outputs.slack-webhook-url }}
+  slack-user:
+    description: 'Slack user id'
+    value: ${{ steps.vars.outputs.slack-user }}
 runs:
   using: 'composite'
   steps:
@@ -25,6 +28,13 @@ runs:
       shell: bash
       run: |
         set -v
+
+        # slack user info
+        #slack_user_id=$(wget -q -O - --header="Authorization: Bearer ${{ env.SLACK_BOT_TOKEN }}" \
+        #"https://slack.com/api/users.lookupByEmail?email=${{  github.event.head_commit.author.email }}" | jq '-r .user.id // empty')
+
+        slack_user_id=$(wget -q -O - --header="Authorization: Bearer ${{ env.SLACK_BOT_TOKEN }}" \
+        "https://slack.com/api/users.lookupByEmail?email=${{ env.USER_EMAIL }}" | jq '-r .user.id // empty')
 
         if [ ! -z "${GITHUB_BASE_REF}" ] ; then
           # pull_request event
@@ -64,3 +74,4 @@ runs:
         echo "::set-output name=gke-cluster::${GKE_CLUSTER}"
         echo "::set-output name=environment::${ENVIRONMENT}"
         echo "::set-output name=slack-webhook-url::${SLACK_WEBHOOK_URL}"
+        echo "::set-output name=slack-user::${slack_user_id}"
