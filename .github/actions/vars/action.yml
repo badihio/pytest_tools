@@ -49,13 +49,13 @@ runs:
 
         echo "Branch: ${branch_name}"
 
-        if [[ "${{ github.event_name }}" == 'push' && ${branch_name} == 'master' ]] ; then
+        if [[ "${{ github.event_name }}" == 'push' && ${branch_name} == 'main' ]] ; then
           echo "Deployment: production"
           export GCP_PROJECT_ID=intsights
           export GKE_CLUSTER=prod-cluster-a1eea04
           export ENVIRONMENT=prod
           export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_PROD }}
-        elif [[ "${{ github.event_name }}" == 'workflow_dispatch' && ${branch_name} == 'master' ]] ; then
+        elif [[ "${{ github.event_name }}" == 'workflow_dispatch' && ${branch_name} == 'main' ]] ; then
           echo "Deployment: production"
           export GCP_PROJECT_ID=intsights
           export GKE_CLUSTER=prod-cluster-a1eea04
