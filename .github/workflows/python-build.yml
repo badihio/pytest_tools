@@ -34,11 +34,9 @@ jobs:
       id: vars
       with:
         image-name: tip-graph-api
-      env:
-        SLACK_WEBHOOK_URL_PROD: ${{ secrets.SLACK_WEBHOOK_URL_PROD }}
-        SLACK_WEBHOOK_URL_DEV: ${{ secrets.SLACK_WEBHOOK_URL_DEV }}
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        USER_EMAIL: ${{ secrets.USER_EMAIL }}
+        slack-webhook-url-prod: ${{ secrets.SLACK_WEBHOOK_URL_PROD }}
+        slack-webhook-url-dev: ${{ secrets.SLACK_WEBHOOK_URL_DEV }}
+        slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
 
     - name: Install dependencies
       run: |

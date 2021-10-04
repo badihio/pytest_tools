@@ -1,6 +1,12 @@
 inputs:
   image-name:
     description: 'unique_image_name'
+  slack-webhook-url-prod:
+    description: 'slack prod deployment channel webhook url'
+  slack-webhook-url-dev:
+    description: 'slack dev deployment channel webhook url'
+  slack-bot-token:
+    description: 'slack api bot token'
 outputs:
   gcp-project-id:
     description: 'GCP Project ID'
@@ -30,7 +36,7 @@ runs:
         set -v
 
         # slack user info
-        slack_user_id=$(wget -q -O - --header="Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
+        slack_user_id=$(wget -q -O - --header="Authorization: Bearer ${{ inputs.slack-bot-token }}" \
         "https://slack.com/api/users.lookupByEmail?email=${{  github.event.head_commit.author.email }}" | jq -r ".user.id // empty")
 
         if [ ! -z "${GITHUB_BASE_REF}" ] ; then
@@ -51,19 +57,19 @@ runs:
           export GCP_PROJECT_ID=intsights
           export GKE_CLUSTER=prod-cluster-a1eea04
           export ENVIRONMENT=prod
-          export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_PROD }}
+          export SLACK_WEBHOOK_URL=${{ inputs.slack-webhook-url-prod }}
         elif [[ "${{ github.event_name }}" == 'workflow_dispatch' && ${branch_name} == 'main' ]] ; then
           echo "Deployment: production"
           export GCP_PROJECT_ID=intsights
           export GKE_CLUSTER=prod-cluster-a1eea04
           export ENVIRONMENT=prod
-          export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_PROD }}
+          export SLACK_WEBHOOK_URL=${{ inputs.slack-webhook-url-prod }}
         else
           echo "Deployment: development"
           export GCP_PROJECT_ID=intsights-dev-2
           export GKE_CLUSTER=dev-cluster-23b9a3c
           export ENVIRONMENT=dev
-          export SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL_DEV }}
+          export SLACK_WEBHOOK_URL=${{ inputs.slack-webhook-url-dev }}
         fi
 
         echo "::set-output name=gcp-project-id::${GCP_PROJECT_ID}"
