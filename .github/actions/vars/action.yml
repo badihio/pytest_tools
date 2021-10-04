@@ -27,7 +27,7 @@ outputs:
     description: 'Slack user id'
     value: ${{ steps.vars.outputs.slack-user }}
   should-deploy:
-    description: 'Should we deploy the code (boolean)')
+    description: 'Should we deploy the code (boolean)'
     value: ${{ steps.vars.outputs.should-deploy }}
 runs:
   using: 'composite'
