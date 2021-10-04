@@ -30,7 +30,7 @@ runs:
         set -v
 
         # slack user info
-        slack_user_id=$(wget -q -O - --header="Authorization: Bearer ${{ env.SLACK_BOT_TOKEN }}" \
+        slack_user_id=$(wget -q -O - --header="Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
         "https://slack.com/api/users.lookupByEmail?email=${{  github.event.head_commit.author.email }}" | jq -r ".user.id // empty")
 
         if [ ! -z "${GITHUB_BASE_REF}" ] ; then
