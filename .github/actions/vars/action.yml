@@ -38,8 +38,7 @@ runs:
       run: |
         set -v
 
-        #should_deploy=${{ github.event_name == 'push' || github.event.inputs.deploy == 'y' }}
-        should_deploy=true
+        should_deploy=${{ github.event_name == 'push' || github.event.inputs.deploy == 'y' }}
 
         # slack user info
         slack_user_id=$(wget -q -O - --header="Authorization: Bearer ${{ inputs.slack-bot-token }}" \
