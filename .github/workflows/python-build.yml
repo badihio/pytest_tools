@@ -54,6 +54,6 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
       if: always()
     - name: Print deploy
-      if: ${{ steps.vars.outputs.should-deploy }}
+      if: ${{ steps.vars.outputs.should-deploy == true }}
       run: |
         echo "Let's go..."
