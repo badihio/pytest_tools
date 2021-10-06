@@ -38,6 +38,16 @@ jobs:
         slack-webhook-url-dev: ${{ secrets.SLACK_WEBHOOK_URL_DEV }}
         slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
 
+    - name: Slack Notification Start
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        if_mention: 'always'
+        text: 'workflow1 started'
+        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+      env:
+        SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -48,7 +58,7 @@ jobs:
         status: ${{ job.status }}
         mention: ${{  steps.vars.outputs.slack-user }} 
         if_mention: 'always'
-        text: '{{{APP_NAME}}} finished'
+        text: 'workflow1 finished. status: ${{ job.status }}'
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
       env:
         SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
