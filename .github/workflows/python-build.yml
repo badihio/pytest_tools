@@ -43,8 +43,9 @@ jobs:
       with:
         status: ${{ job.status }}
         if_mention: 'always'
-        text: 'workflow1 started'
+        text: '*Workflow1* started :rocket:'
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+        author_name: 'Github bot'
       env:
         SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
 
@@ -63,7 +64,7 @@ jobs:
         status: ${{ job.status }}
         mention: ${{  steps.vars.outputs.slack-user }} 
         if_mention: 'always'
-        text: 'workflow1 finished: ${{ job.status }}'
+        text: '*Workflow1* finished: ${{ job.status }}'
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
       env:
         SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
