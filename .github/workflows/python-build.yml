@@ -38,7 +38,7 @@ jobs:
         slack-webhook-url-dev: ${{ secrets.SLACK_WEBHOOK_URL_DEV }}
         slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
 
-    - name: Slack Notification Start
+    - name: Start notification
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
@@ -58,7 +58,7 @@ jobs:
       run: |
         lol
 
-    - name: Slack Notification
+    - name: Finish notification
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
@@ -66,6 +66,7 @@ jobs:
         if_mention: 'always'
         text: '*Workflow1* finished: ${{ job.status }}'
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+        author_name: 'Github bot'
       env:
         SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
       if: always()
