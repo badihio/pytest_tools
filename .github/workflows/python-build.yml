@@ -36,7 +36,7 @@ jobs:
         image-name: tip-graph-api
         slack-webhook-url-prod: ${{ secrets.SLACK_WEBHOOK_URL_PROD }}
         slack-webhook-url-dev: ${{ secrets.SLACK_WEBHOOK_URL_DEV }}
-        slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+        slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN_MISSING }}
 
     - name: Start notification
       uses: 8398a7/action-slack@v3
@@ -53,10 +53,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install build
-
-    - name: Fail workflow
-      run: |
-        lol
 
     - name: Finish notification
       uses: 8398a7/action-slack@v3
