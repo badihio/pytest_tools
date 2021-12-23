@@ -44,7 +44,7 @@ jobs:
         status: ${{ job.status }}
         if_mention: 'always'
         text: '*Workflow1* started :rocket:'
-        fields: workflow,took
+        fields: workflow
         author_name: 'Github bot'
       env:
         SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
