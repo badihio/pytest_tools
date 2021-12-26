@@ -52,7 +52,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pipi install build
+        pip install build
 
     - name: Finish notification
       uses: 8398a7/action-slack@v3
