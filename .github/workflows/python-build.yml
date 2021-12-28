@@ -41,12 +41,12 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: custom
-          fields: workflow,job,commit,repo,ref,author,took
+          fields: workflow,message,author
           custom_payload: |
             {
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `${process.env.AS_WORKFLOW} ( ${process.env.AS_MESSAGE} ) started :rocket:`,
+                text: `${process.env.AS_WORKFLOW} (${process.env.AS_MESSAGE}) by ${process.env.AS_AUTHOR} started :rocket:`,
               }]
             }
         env:
@@ -60,7 +60,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: custom
-          fields: workflow,job,commit,repo,ref,author,took
+          fields: workflow,job,message,author,took
           custom_payload: |
             {
               attachments: [{
