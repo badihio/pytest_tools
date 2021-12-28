@@ -12,61 +12,65 @@ on:
   workflow_dispatch:
     inputs:
       deploy:
-        description: 'Should deploy (n/y)'
-        default: 'n'
+        description: "Should deploy (n/y)"
+        default: "n"
         required: false
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-    - name: Prepare Variables
-      uses: ./.github/actions/vars
-      id: vars
-      with:
-        image-name: tip-graph-api
-        slack-webhook-url-prod: ${{ secrets.SLACK_WEBHOOK_URL_PROD }}
-        slack-webhook-url-dev: ${{ secrets.SLACK_WEBHOOK_URL_DEV }}
-        slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN_MISSING }}
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Prepare Variables
+        uses: ./.github/actions/vars
+        id: vars
+        with:
+          image-name: tip-graph-api
+          slack-webhook-url-prod: ${{ secrets.SLACK_WEBHOOK_URL_PROD }}
+          slack-webhook-url-dev: ${{ secrets.SLACK_WEBHOOK_URL_DEV }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN_MISSING }}
 
-    - name: Start notification
-      uses: 8398a7/action-slack@v3
-      with:
-        status: ${{ job.status }}
-        if_mention: 'always'
-        text: '*Workflow1* started :rocket:'
-        fields: workflow
-        author_name: 'Github bot'
-      env:
-        SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
+      - name: Start notification
+        uses: 8398a7/action-slack@v3
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install build
+        with:
+          status: custom
+          fields: workflow,job,commit,repo,ref,author,took
+          custom_payload: |
+            {
+              attachments: [{
+                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
+              }]
+            }
+          author_name: "Github bot"
+        env:
+          SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
 
-    - name: Finish notification
-      uses: 8398a7/action-slack@v3
-      with:
-        status: ${{ job.status }}
-        mention: ${{  steps.vars.outputs.slack-user }} 
-        if_mention: 'always'
-        text: '*Workflow1* finished: ${{ job.status }}'
-        fields: workflow,took
-        author_name: 'Github bot'
-      env:
-        SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
-      if: always()
-    - name: Print deploy
-      if: ${{ steps.vars.outputs.should-deploy == 'true' }}
-      run: |
-        echo "Let's go..."
+      - name: Finish notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          mention: ${{  steps.vars.outputs.slack-user }}
+          if_mention: "always"
+          text: "*Workflow1* finished: ${{ job.status }}"
+          fields: workflow,took
+          author_name: "Github bot"
+        env:
+          SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
+        if: always()
+      - name: Print deploy
+        if: ${{ steps.vars.outputs.should-deploy == 'true' }}
+        run: |
+          echo "Let's go..."
