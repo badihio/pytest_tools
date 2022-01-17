@@ -78,7 +78,20 @@ jobs:
             {
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `App ${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_MESSAGE}) by ${process.env.AS_AUTHOR} *${{ job.status }}* in ${process.env.AS_TOOK}`,
+                author_name: `${process.env.AS_AUTHOR}`,
+                pretext: `App ${process.env.AS_WORKFLOW} *${{ job.status }}* in ${ process.env.AS_TOOK }`,
+                fields: [
+                  {
+                    title: 'message:',
+                    value: `${process.env.AS_MESSAGE}`,
+                    short: true,
+                  },
+                  {
+                    title: 'workflow:',
+                    value: `${process.env.AS_JOB}`,
+                    short: true,
+                  },
+                ]
               }]
             }
         env:
