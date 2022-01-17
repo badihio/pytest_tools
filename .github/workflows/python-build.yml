@@ -70,7 +70,7 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
-        if: always()
+        if: success() || failure()
       - name: Print deploy
         if: ${{ steps.vars.outputs.should-deploy == 'true' }}
         run: |
