@@ -54,7 +54,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pipp install build
+          pip install build
 
       - name: Finish notification
         uses: 8398a7/action-slack@v3
@@ -70,7 +70,7 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ steps.vars.outputs.slack-webhook-url }}
-        if: success() || failure()
+        if: (success() || failure()) && ${{ steps.vars.outputs.should-deploy == 'true' }}
       - name: Print deploy
         if: ${{ steps.vars.outputs.should-deploy == 'true' }}
         run: |
