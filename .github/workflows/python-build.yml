@@ -50,11 +50,11 @@ jobs:
                 fields: [
                   {
                     value: `*Author:* ${process.env.AS_AUTHOR}`,
-                    short: true,
+                    short: false,
                   },
                   {
                     value: `*Commit:* ${process.env.AS_MESSAGE}`,
-                    short: true,
+                    short: false,
                   },
                 ]
               }]
@@ -79,11 +79,11 @@ jobs:
                 fields: [
                   {
                     value: `*Author:* ${process.env.AS_AUTHOR}`,
-                    short: true,
+                    short: false,
                   },
                   {
                     value: `*Commit:* ${process.env.AS_MESSAGE}`,
-                    short: true,
+                    short: false,
                   },
                 ]
               }]
