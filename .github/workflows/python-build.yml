@@ -47,7 +47,7 @@ jobs:
               attachments: [{
                 color: '#4287f5',
                 author_name: `${process.env.AS_AUTHOR}`,
-                pretext: `*App ${process.env.AS_WORKFLOW} `started`* :rocket:`,
+                pretext: `*App ${process.env.AS_WORKFLOW} \`started\`* :rocket:`,
                 fields: [
                   {
                     value: `*Commit:* ${process.env.AS_MESSAGE}`,
