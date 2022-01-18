@@ -50,7 +50,7 @@ jobs:
                 pretext: `*App ${process.env.AS_WORKFLOW}* started :rocket:`,
                 fields: [
                   {
-                    value: `commit: ${process.env.AS_MESSAGE}`,
+                    value: `*commit:* ${process.env.AS_MESSAGE}`,
                     short: true,
                   },
                 ]
@@ -73,10 +73,10 @@ jobs:
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
                 author_name: `${process.env.AS_AUTHOR}`,
-                pretext: `*App ${process.env.AS_WORKFLOW} ${{ job.status }}*` + `in ${ process.env.AS_TOOK }`,
+                pretext: `*App ${process.env.AS_WORKFLOW}* ${{ job.status }}` + `in ${ process.env.AS_TOOK }`,
                 fields: [
                   {
-                    value: `commit: ${process.env.AS_MESSAGE}`,
+                    value: `*commit:* ${process.env.AS_MESSAGE}`,
                     short: true,
                   },
                 ]
