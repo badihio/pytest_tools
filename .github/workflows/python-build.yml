@@ -73,7 +73,7 @@ jobs:
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
                 author_name: `${process.env.AS_AUTHOR}`,
-                pretext: '${{ job.status }}' === 'success' ? `*App ${process.env.AS_WORKFLOW}* ${{ job.status }} :successful: in ${ process.env.AS_TOOK }` : `*App ${process.env.AS_WORKFLOW}* ${{ job.status }} :failed: in ${ process.env.AS_TOOK }`,
+                pretext: '${{ job.status }}' === 'success' ? `*App ${process.env.AS_WORKFLOW}* ${{ job.status }} [':successful:', ':party_sus:', ':sus_party:'][Math.floor(Math.random() * 3)] in ${ process.env.AS_TOOK }` : `*App ${process.env.AS_WORKFLOW}* ${{ job.status }} :failed: in ${ process.env.AS_TOOK }`,
                 fields: [
                   {
                     value: `*Commit:* ${process.env.AS_MESSAGE}`,
