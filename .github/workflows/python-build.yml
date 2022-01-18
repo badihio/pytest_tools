@@ -64,7 +64,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pipp install build
+          pip install build
 
       - name: Finish notification
         uses: 8398a7/action-slack@v3
@@ -75,7 +75,9 @@ jobs:
             {
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                pretext: '${{ job.status }}' === 'success' ? `*App ${process.env.AS_WORKFLOW} \`success\`* ${[':rotatingparrot:', ':party_sus:', ':sus_party:', ':party-parrot-hd:', ':github_parrot:', ':party_k8s:', ':9000:', ':corey:', ':corey-rolling:', ':happyhozez:', ':woohoo:', ':strawberry:', ':heart_eyes_cat:', ':sun_with_face:', ':dabcat:', ':first_place_medal:', ':flag-il:'][Math.floor(Math.random() * 17)]} ${ process.env.AS_TOOK }` : `*App ${process.env.AS_WORKFLOW} \`failure\`* ${[':pensive:', ':flushed:', ':see_no_evil:', ':octagonal_sign:', ':rain_cloud:', ':crossed_swords:', ':x:', ':bangbang:', ':sos:', ':failed:', ':silence_of_the_lamberth:', ':suspect:', ':waaagh:', ':ahh_dwight:', ':angry_cowboy:'][Math.floor(Math.random() * 15)]} ${ process.env.AS_TOOK }`,
+                pretext: '${{ job.status }}' === 'success' ?
+                          `*App ${process.env.AS_WORKFLOW} \`success\`* ${[':rotatingparrot:', ':party_sus:', ':sus_party:', ':party-parrot-hd:', ':github_parrot:', ':party_k8s:', ':9000:', ':corey:', ':corey-rolling:', ':happyhozez:', ':woohoo:', ':strawberry:', ':heart_eyes_cat:', ':sun_with_face:', ':dabcat:', ':first_place_medal:', ':flag-il:'][Math.floor(Math.random() * 17)]} ${ process.env.AS_TOOK }` :
+                          `*App ${process.env.AS_WORKFLOW} \`failure\`* ${[':pensive:', ':flushed:', ':see_no_evil:', ':octagonal_sign:', ':rain_cloud:', ':crossed_swords:', ':x:', ':bangbang:', ':sos:', ':failed:', ':silence_of_the_lamberth:', ':suspect:', ':waaagh:', ':ahh_dwight:', ':angry_cowboy:'][Math.floor(Math.random() * 15)]} ${ process.env.AS_TOOK }`,
                 fields: [
                   {
                     value: `*Author:* ${process.env.AS_AUTHOR}`,
