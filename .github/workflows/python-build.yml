@@ -46,9 +46,12 @@ jobs:
             {
               attachments: [{
                 color: '#4287f5',
-                author_name: `${process.env.AS_AUTHOR}`,
                 pretext: `*App ${process.env.AS_WORKFLOW} \`started\`* :rocket:`,
                 fields: [
+                  {
+                    value: `*Author:* ${process.env.AS_AUTHOR}`,
+                    short: true,
+                  },
                   {
                     value: `*Commit:* ${process.env.AS_MESSAGE}`,
                     short: true,
@@ -72,9 +75,12 @@ jobs:
             {
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                author_name: `${process.env.AS_AUTHOR}`,
                 pretext: '${{ job.status }}' === 'success' ? `*App ${process.env.AS_WORKFLOW} \`success\`* ${[':rotatingparrot:', ':party_sus:', ':sus_party:', ':party-parrot-hd:', ':github_parrot:', ':party_k8s:', ':9000:', ':corey:', ':corey-rolling:', ':happyhozez:'][Math.floor(Math.random() * 10)]} ${ process.env.AS_TOOK }` : `*App ${process.env.AS_WORKFLOW} \`failure\`* :failed: ${ process.env.AS_TOOK }`,
                 fields: [
+                  {
+                    value: `*Author:* ${process.env.AS_AUTHOR}`,
+                    short: true,
+                  },
                   {
                     value: `*Commit:* ${process.env.AS_MESSAGE}`,
                     short: true,
