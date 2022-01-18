@@ -70,7 +70,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: custom
-          fields: message,author,took
+          fields: workflow,message,author,took
           custom_payload: |
             {
               attachments: [{
